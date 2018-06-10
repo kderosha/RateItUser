@@ -1,14 +1,13 @@
-var port = 8081
-var express = require('express');
-var webApp = express();
-var bodyParser = require('body-parser');
-const mongoClient = require('mongodb').MongoClient;
-
-var databaseInformation = {
-  db:mongoClient,
-  url:'mongodb://localhost:27017',
-  database:"user"
-}
+var port = 3000,
+    express = require('express'),
+    webApp = express(),
+    bodyParser = require('body-parser'),
+    mongoClient = require('mongodb').MongoClient,
+    databaseInformation = {
+      database:"user",
+      db:   mongoClient,
+      url:  'mongodb://localhost:27017'
+    }
 
 // Use body parser for the web app.
 webApp.use(bodyParser.urlencoded({extended:false}));
