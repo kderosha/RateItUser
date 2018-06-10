@@ -1,0 +1,17 @@
+{
+    "name": "rateit",
+    "version": "1.0.0",
+    "description": "A web application for rating items",
+    "main": "server.js",
+    "scripts": {
+        "test": "test"
+    },
+    "author": "kderosha",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "cookie-parser": "^1.4.3",
+        "express": "^4.16.3",
+        "mongodb": "^3.0.10"
+    }
+}
