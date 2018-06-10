@@ -1,7 +1,7 @@
 {
     "name": "rateit",
     "version": "1.0.0",
-    "description": "A web application for rating items",
+    "description": "A backend api for user",
     "main": "server.js",
     "scripts": {
         "test": "test"
