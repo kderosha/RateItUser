@@ -7,13 +7,6 @@ module.exports = function(mongoDbInformation){
   });
 
   /**
-    Go to the homepage for the users page.
-  */
-  router.get("/", function(req, res){
-    res.send("home page of the signup application");
-  });
-
-  /**
     Sign a user up for the site. Connect to the local mongo instance.
     Connect to the database and insert a user.
   */
