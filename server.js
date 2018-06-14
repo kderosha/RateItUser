@@ -1,17 +1,14 @@
-var port = 3000,
+var port = 3001,
     express = require('express'),
     webApp = express(),
     bodyParser = require('body-parser'),
     mongoClient = require('mongodb').MongoClient,
-    databaseInformation = {
-      database:"user",
-      db:   mongoClient,
-      url:  'mongodb://localhost:27017'
-    }
+    cors = require("cors");
 
+webApp.use(cors());
 // Use body parser for the web app.
 webApp.use(bodyParser.urlencoded({extended:false}));
 webApp.use(bodyParser.json());
 
-webApp.use('/', require('./user-controller')(databaseInformation));
+webApp.use('/auth', require(__dirname + '/controllers/auth.js')());
 webApp.listen(port);
