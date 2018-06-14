@@ -31,6 +31,13 @@ module.exports = function(mongoClient){
     });
   });
 
+  /**
+    A route endpoint to sign up a user
+    process: grab plaintext password sent over https. hash that password with bcrypts algorithm.
+    connect to the mongo database. use the users table and insert a document containing.
+    { email:, hashedPassword:, userName:,}. Once the user is inserted create a jwt out of the
+    users id, username
+  */
   router.post("/signup", function(req, response){
     var password = req.body.password;
     bcrypt.genSalt(saltRounds, function(err, salt){
@@ -47,13 +54,10 @@ module.exports = function(mongoClient){
             dbo.collection("users").insertOne(signUpUser, function(err, res){
               if(err) throw err;
               console.log("inserted document");
-              db.close();
+              // Find the newly created user.
               console.log(req.body);
               // create a jwt token and send it back;
-              response.json({
-                "username":req.body.userName,
-                "password":req.body.password
-              });
+              response.json(res);
             });
           });
         });
