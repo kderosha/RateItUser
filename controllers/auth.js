@@ -5,26 +5,29 @@ module.exports = function(mongoClient){
   const bcrypt = require('bcrypt');
   var superSecretSecret = "rateItIsAnAwesomeApplication";
 
-  router.post("/login", function(req, response){
+  router.get("/login", function(req, response){
+    console.log(req.query.email);
+    console.log(req.query.password);
     mongoClient.connect("mongodb://localhost:27017/users", function(err, db){
       if(err) throw err;
       var dbo = db.db("users");
       dbo.createCollection("users", function(err, res){
-        dbo.collection("users").findOne({email:req.body.email}, function(err, results){
+        dbo.collection("users").findOne({email:req.query.email}, function(err, results){
           if(err) throw err;
           console.log("found a user");
+          console.log(results);
           db.close();
-          bcrypt.compare(req.body.password, results.hashedPassword).then(function(res){
-            if(res){
+          bcrypt.compare(req.query.password, results.hashedPassword, function(err, matched){
+            if(matched){
+              // create a jwt token and send it back;
+              response.json({
+                rateItToken:"Rate It string"
+              });
               console.log("passwords match");
             } else {
+              response.send("no password");
               console.log("passwords don't match")
             }
-          })
-          // create a jwt token and send it back;
-          response.json({
-            "username":req.body.email,
-            "password":req.body.password
           });
         });
       });
