@@ -1,5 +1,6 @@
 module.exports = function(mongoClient){
   var express = require("express");
+  var jsonWebToken = require("jsonwebtoken");
   var router = express.Router();
   var saltRounds = 10;
   const bcrypt = require('bcrypt');
@@ -20,13 +21,18 @@ module.exports = function(mongoClient){
           bcrypt.compare(req.query.password, results.hashedPassword, function(err, matched){
             if(matched){
               // create a jwt token and send it back;
+              var claims = {
+                _id:results._id,
+                userName:results.userName
+                email:results.email
+              }
+              var signedToken = jsonWebToken.sign(claims, "SECRETKEY", {algorithm:"HS512"});
+
               response.json({
-                rateItToken:"Rate It string"
+                rateItToken:signedToken
               });
-              console.log("passwords match");
             } else {
               response.send("no password");
-              console.log("passwords don't match")
             }
           });
         });
