@@ -13,4 +13,5 @@ webApp.use(bodyParser.urlencoded({extended:false}));
 webApp.use(bodyParser.json());
 
 webApp.use('/auth', require(__dirname + '/controllers/auth.js')(mongoClient));
+webApp.use('/user', require(__dirname + '/controllers/user.js')(mongoClient));
 webApp.listen(port);

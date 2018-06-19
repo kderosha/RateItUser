@@ -23,7 +23,7 @@ module.exports = function(mongoClient){
               // create a jwt token and send it back;
               var claims = {
                 _id:results._id,
-                userName:results.userName
+                userName:results.userName,
                 email:results.email
               }
               var signedToken = jsonWebToken.sign(claims, "SECRETKEY", {algorithm:"HS512"});
