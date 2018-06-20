@@ -2,9 +2,9 @@ module.exports = function(mongoClient){
   var express = require("express");
   var router = express.Router();
   var jsonWebToken = require("jsonwebtoken");
-
+  var ObjectID = require("mongodb").ObjectID;
   router.use(function(req, res, next){
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    var token = req.headers['x-access-token'];
     // decode token
     if (token) {
       // verifies secret and checks exp
@@ -33,11 +33,17 @@ module.exports = function(mongoClient){
   router.get("/profile", function(req, res){
     var token = req.decoded;
     console.log(token);
+    console.log(new ObjectID(token._id));
     mongoClient.connect("mongodb://localhost:27017/users", function(err, db){
       if(err) throw err;
       var dbo = db.db("users");
       dbo.collection("users").findOne({
-        _id:`${token._id}`
+        _id:new ObjectID(token._id)
+      }, {
+        projection:{
+          "userName":1,
+          "email":1
+        }
       }, function(err, results){
         if(err) throw err;
         console.log(results);
