@@ -3,6 +3,7 @@ module.exports = function(mongoClient){
   var router = express.Router();
   var jsonWebToken = require("jsonwebtoken");
   var ObjectID = require("mongodb").ObjectID;
+
   router.use(function(req, res, next){
     var token = req.headers['x-access-token'];
     // decode token
